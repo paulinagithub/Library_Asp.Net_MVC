@@ -156,6 +156,8 @@ C:\Users\Paulina\source\repos\Library\Library\obj\Debug\netcoreapp3.1\Library.Ra
 C:\Users\Paulina\source\repos\Library\Library\obj\Debug\netcoreapp3.1\Razor\Views\Book\BookList.cshtml.g.cs
 C:\Users\Paulina\source\repos\Library\Library\obj\Debug\netcoreapp3.1\Razor\Views\Book\CreateNewBook.cshtml.g.cs
 C:\Users\Paulina\source\repos\Library\Library\obj\Debug\netcoreapp3.1\Razor\Views\Book\EditBook.cshtml.g.cs
+C:\Users\Paulina\source\repos\Library\Library\obj\Debug\netcoreapp3.1\Razor\Views\Home\Home.cshtml.g.cs
+C:\Users\Paulina\source\repos\Library\Library\obj\Debug\netcoreapp3.1\Razor\Views\Home\Login.cshtml.g.cs
 C:\Users\Paulina\source\repos\Library\Library\obj\Debug\netcoreapp3.1\Razor\Views\Reservation\ReservationDetails.cshtml.g.cs
 C:\Users\Paulina\source\repos\Library\Library\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\Paulina\source\repos\Library\Library\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
@@ -170,6 +172,3 @@ C:\Users\Paulina\source\repos\Library\Library\obj\Debug\netcoreapp3.1\staticweba
 C:\Users\Paulina\source\repos\Library\Library\obj\Debug\netcoreapp3.1\Library.dll
 C:\Users\Paulina\source\repos\Library\Library\obj\Debug\netcoreapp3.1\Library.pdb
 C:\Users\Paulina\source\repos\Library\Library\obj\Debug\netcoreapp3.1\Library.genruntimeconfig.cache
-C:\Users\Paulina\source\repos\Library\Library\obj\Debug\netcoreapp3.1\Razor\Views\Home\Home.cshtml.g.cs
-C:\Users\Paulina\source\repos\Library\Library\obj\Debug\netcoreapp3.1\Razor\Views\Home\Login.cshtml.g.cs
-C:\Users\Paulina\source\repos\Library\Library\obj\Debug\netcoreapp3.1\Library.csprojAssemblyReference.cache
