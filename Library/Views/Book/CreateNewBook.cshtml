@@ -1,0 +1,44 @@
+﻿@model Library.Models.Book
+
+@{
+    ViewData["Title"] = "CreateNewBook";
+}
+
+<h1>CreateNewBook</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateNewBook">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Author" class="control-label"></label>
+                <input asp-for="Author" class="form-control" />
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PublishmentYear" class="control-label"></label>
+                <input asp-for="PublishmentYear" class="form-control" />
+                <span asp-validation-for="PublishmentYear" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShortDescription" class="control-label"></label>
+                <textarea asp-for="ShortDescription" mode="multiline" class="form-control" style="width: 600px; height: 300px;">
+                </textarea>
+                <span asp-validation-for="ShortDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Stwórz nowy" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="BookList" class="btn btn-primary">Back to List</a>
+</div>
+
