@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Library.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +29,15 @@ namespace Library
         {
             var connection = Configuration.GetConnectionString("LibraryDatabase");
             services.AddDbContext<LibraryDBContext>(options => options.UseSqlServer(connection));
+
+            services
+                .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Home/Login";
+
+                });
+
             services.AddControllersWithViews();
         }
 
@@ -47,7 +58,9 @@ namespace Library
             app.UseStaticFiles();
 
             app.UseRouting();
-    
+
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -55,6 +68,10 @@ namespace Library
                 endpoints
                 .MapControllerRoute(
                     name: "default",
+                    pattern: "{controller=Home}/{action=Home}");
+                endpoints
+                .MapControllerRoute(
+                    name: "book",
                     pattern: "{controller=Book}/{action=BookList}/{id?}");
                 endpoints
                 .MapControllerRoute(

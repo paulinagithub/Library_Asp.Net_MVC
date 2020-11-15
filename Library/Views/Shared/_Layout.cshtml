@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -16,19 +20,32 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"/>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" />
             </div>
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div>
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="LogOut" style="float: right;">Wyloguj</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" />
+                </div>
+             }
+
         </nav>
     </header>
     <div class="container">
         <main role="main" class="pb-3">
-            @if(TempData["success"] != null)
+            @if (TempData["success"] != null)
             {
                 <div class="alert alert-success">
                     @TempData["Success"]
                 </div>
             }
-            @if(TempData["Error"] != null)
+            @if (TempData["Error"] != null)
             {
                 <div class="alert alert-danger">
                     @TempData["Error"]

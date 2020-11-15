@@ -6,9 +6,11 @@ using Library.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Library.Controllers
 {
+    [Authorize]
     public class ReservationController : Controller
     {
         private readonly LibraryDBContext context;
@@ -53,7 +55,7 @@ namespace Library.Controllers
         // GET: ReservationController/BookReservation/5
         public async Task<ActionResult> BookReservation(int id)
         {
-            if (!context.Reservations.Any(a => a.BookId == id && a.ReservationDate < DateTime.Now))
+            if (!context.Reservations.Any(a => a.BookId == id && a.ReservationDate == DateTime.Now.Date))
             {
                 Reservation reservation = new Reservation();
                 reservation.ReservationDate = DateTime.Now;
