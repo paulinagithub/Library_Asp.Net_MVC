@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Library.Controllers
 {
@@ -22,35 +23,27 @@ namespace Library.Controllers
 
         // GET: ReservationController/ReservationDetails/5
         public async Task<ActionResult> ReservationDetails(int id)
-        {
-            try
-            {
-                List<Reservation> reservation = await context.Books
-                    .Join(context.Reservations,
-                          book => book,
-                          reservation => reservation.Book,
-                          (book, reservation) =>
-                          new Reservation
-                          {
-                              BookId = reservation.BookId,
-                              ReservationDate = reservation.ReservationDate,
-                              Book = book
-                          })
-                    .Where(w => w.BookId == id)
-                    .ToListAsync();
+        {           
+            List<Reservation> reservation = await context.Books
+                .Join(context.Reservations,
+                        book => book,
+                        reservation => reservation.Book,
+                        (book, reservation) =>
+                        new Reservation
+                        {
+                            BookId = reservation.BookId,
+                            ReservationDate = reservation.ReservationDate,
+                            Book = book
+                        })
+                .Where(w => w.BookId == id)
+                .ToListAsync();
 
-                if (reservation == null)
-                {
-                    return NotFound();
-                }
-
-                return View(reservation);
-            }
-            catch (Exception)
+            if (reservation == null)
             {
-                TempData["Error"] = "Nie udało się otworzyć listy rezerwacji";
-                return RedirectToAction("BookList", "Book");
+                return NotFound();
             }
+
+            return View(reservation);           
         }
         // GET: ReservationController/BookReservation/5
         public async Task<ActionResult> BookReservation(int id)
@@ -59,28 +52,21 @@ namespace Library.Controllers
             {
                 Reservation reservation = new Reservation();
                 reservation.ReservationDate = DateTime.Now;
-                reservation.UserId = 1;
+                reservation.UserId = Int32.Parse(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
                 reservation.BookId = id;
-
-                try
-                {
-                    context.Add(reservation);
-                    await context.SaveChangesAsync();
-                    ShowInformationAboutAction("Success", "Książka została zarezerwowana.");
-                }
-                catch (Exception)
-                {
-                    ShowInformationAboutAction("Error", "Nie jest możliwe dokonanie rezerwacji.");
-                }
+              
+                context.Add(reservation);
+                await context.SaveChangesAsync();
+                SetFlashMessage("Success", "Książka została zarezerwowana.");              
             }
             else
             {
-                ShowInformationAboutAction("Error", "Książka została zarezerwowana przez innego użytkownika.");
+                SetFlashMessage("Error", "Książka została zarezerwowana przez innego użytkownika.");
             }
             return RedirectToAction("BookList", "Book");
         }
 
-        private void ShowInformationAboutAction(string resultOfAction, string message)
+        private void SetFlashMessage(string resultOfAction, string message)
         {
             TempData[$"{resultOfAction}"] = message;
         }

@@ -12,6 +12,7 @@ namespace Library.Controllers
 {
     public class HomeController : Controller
     {
+        public const int UserID = 1;
         public const string LoginName = "Admin";
         public const string Passward = "Admin";
         public IActionResult Login()
@@ -26,7 +27,7 @@ namespace Library.Controllers
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, user.Login)
+                    new Claim(ClaimTypes.NameIdentifier, UserID.ToString())
                 };
                 var claimsIdentity = new ClaimsIdentity(claims, "Login");
 

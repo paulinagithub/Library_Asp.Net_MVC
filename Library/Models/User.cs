@@ -8,6 +8,8 @@ namespace Library.Models
 {
     public class User
     {
+        public int UserID { get; set; }
+
         [Required(ErrorMessage = "Login jest wymagane")]
         [Display(Name = "Login")]
         public string Login { get; set; }

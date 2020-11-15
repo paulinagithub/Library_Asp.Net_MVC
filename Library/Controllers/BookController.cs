@@ -36,73 +36,53 @@ namespace Library.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateNewBook(Book book)
-        {
-            try
+        {          
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    context.Add(book);
-                    await context.SaveChangesAsync();
+                context.Add(book);
+                await context.SaveChangesAsync();
 
-                    ShowInformationAboutAction("Success", "Książka została dodana.");
-                    return RedirectToAction("BookList");
-                }
-            }
-            catch(Exception)
-            {
-                ShowInformationAboutAction("Error", "Nie udało się stworzyć nowego elementu");
+                SetFlashMessage("Success", "Książka została dodana.");
                 return RedirectToAction("BookList");
             }
-
+            else
+            {
+                SetFlashMessage("Error", "Nie udało się stworzyć nowego elementu");
+            }           
             return View();
         }
 
         // GET: BookController/Edit/5
         public async Task<ActionResult> EditBook(int id)
-        { 
-            try
-            {
-                Book book = await context.Books.Where(w => w.BookId == id).FirstAsync();
+        {            
+            Book book = await context.Books.Where(w => w.BookId == id).FirstAsync();
 
-                if (book == null)
-                {
-                    return NotFound();
-                }
-
-                return View(book);
-            } 
-            catch(Exception)
+            if (book == null)
             {
-                ShowInformationAboutAction("Error", "Wystąpił błąd w trakcie pobierania książki do edycji.");
-                return RedirectToAction("BookList");
+                return NotFound();
             }
+
+            return View(book);          
         }
 
         // POST: BookController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditBook(Book book)
-        {
-            try
+        {          
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    context.Update(book);
-                    await context.SaveChangesAsync();
+                context.Update(book);
+                await context.SaveChangesAsync();
 
-                    ShowInformationAboutAction("Success", "Książka została zaktualizowana.");
-                }              
-            }
-            catch(Exception)
-            {
-                ShowInformationAboutAction("Error", "Wystąpił błąd w trakcie edycji elementu.");
-            }
+                SetFlashMessage("Success", "Książka została zaktualizowana.");
+            }              
             return RedirectToAction("BookList");
         }
 
-        private void ShowInformationAboutAction(string resultOfAction, string message)
+        private void SetFlashMessage(string messageType, string message)
         {
-            TempData[$"{resultOfAction}"] = message;
+            TempData[$"{messageType}"] = message;
         }
     }
 }
