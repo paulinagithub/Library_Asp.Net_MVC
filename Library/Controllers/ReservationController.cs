@@ -8,36 +8,24 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Library.Services;
+using Library.ViewModel;
 
 namespace Library.Controllers
 {
     [Authorize]
     public class ReservationController : Controller
     {
-        private readonly LibraryDBContext context;
+        private readonly IReservationService _reservationService;
 
-        public ReservationController(LibraryDBContext context)
+        public ReservationController(IReservationService reservationService)
         {
-            this.context = context;
+            _reservationService = reservationService;
         }
-
-        // GET: ReservationController/ReservationDetails/5
+        [HttpGet]
         public async Task<ActionResult> ReservationDetails(int id)
-        {           
-            List<Reservation> reservation = await context.Books
-                .Join(context.Reservations,
-                        book => book,
-                        reservation => reservation.Book,
-                        (book, reservation) =>
-                        new Reservation
-                        {
-                            BookId = reservation.BookId,
-                            ReservationDate = reservation.ReservationDate,
-                            Book = book
-                        })
-                .Where(w => w.BookId == id)
-                .ToListAsync();
-
+        {
+            List<ReservationViewModel> reservation = await _reservationService.GetReservationDetail(id);
             if (reservation == null)
             {
                 return NotFound();
@@ -45,18 +33,12 @@ namespace Library.Controllers
 
             return View(reservation);           
         }
-        // GET: ReservationController/BookReservation/5
+        [HttpPost]
         public async Task<ActionResult> BookReservation(int id)
         {
-            if (!context.Reservations.Any(a => a.BookId == id && a.ReservationDate == DateTime.Now.Date))
+            if (!_reservationService.AnyReservation(id))
             {
-                Reservation reservation = new Reservation();
-                reservation.ReservationDate = DateTime.Now;
-                reservation.UserId = Int32.Parse(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
-                reservation.BookId = id;
-              
-                context.Add(reservation);
-                await context.SaveChangesAsync();
+                await _reservationService.SetReservation(id, Int32.Parse(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
                 SetFlashMessage("Success", "Książka została zarezerwowana.");              
             }
             else

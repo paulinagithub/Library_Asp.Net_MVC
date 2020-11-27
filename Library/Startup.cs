@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Library.Models;
+using Library.Repository;
+using Library.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -37,6 +40,16 @@ namespace Library
                     options.LoginPath = "/Home/Login";
 
                 });
+            services.AddTransient<IBookRepository, BookRepository>();
+            services.AddTransient<IBookService, BookService>();
+
+            services.AddTransient<IReservationRepository, ReservationRepository>();
+            services.AddTransient<IReservationService, ReservationService>();
+
+            services.AddTransient<ILoginRepository, LoginRepository>();
+            services.AddTransient<ILoginService, LoginService>();
+
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddControllersWithViews();
         }

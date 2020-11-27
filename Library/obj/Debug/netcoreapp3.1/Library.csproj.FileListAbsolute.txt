@@ -9,6 +9,8 @@ C:\Users\Paulina\source\repos\Library\Library\bin\Debug\netcoreapp3.1\Library.dl
 C:\Users\Paulina\source\repos\Library\Library\bin\Debug\netcoreapp3.1\Library.pdb
 C:\Users\Paulina\source\repos\Library\Library\bin\Debug\netcoreapp3.1\Library.Views.dll
 C:\Users\Paulina\source\repos\Library\Library\bin\Debug\netcoreapp3.1\Library.Views.pdb
+C:\Users\Paulina\source\repos\Library\Library\bin\Debug\netcoreapp3.1\AutoMapper.dll
+C:\Users\Paulina\source\repos\Library\Library\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\Paulina\source\repos\Library\Library\bin\Debug\netcoreapp3.1\Humanizer.dll
 C:\Users\Paulina\source\repos\Library\Library\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\Paulina\source\repos\Library\Library\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.dll
@@ -144,6 +146,7 @@ C:\Users\Paulina\source\repos\Library\Library\bin\Debug\netcoreapp3.1\runtimes\w
 C:\Users\Paulina\source\repos\Library\Library\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\e_sqlite3.dll
 C:\Users\Paulina\source\repos\Library\Library\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 C:\Users\Paulina\source\repos\Library\Library\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\Paulina\source\repos\Library\Library\obj\Debug\netcoreapp3.1\Library.csprojAssemblyReference.cache
 C:\Users\Paulina\source\repos\Library\Library\obj\Debug\netcoreapp3.1\Library.AssemblyInfoInputs.cache
 C:\Users\Paulina\source\repos\Library\Library\obj\Debug\netcoreapp3.1\Library.AssemblyInfo.cs
 C:\Users\Paulina\source\repos\Library\Library\obj\Debug\netcoreapp3.1\Library.csproj.CoreCompileInputs.cache

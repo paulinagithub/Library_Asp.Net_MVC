@@ -19,6 +19,8 @@ namespace Library.Models
 
         public virtual DbSet<Book> Books { get; set; }
         public virtual DbSet<Reservation> Reservations { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -44,7 +46,19 @@ namespace Library.Models
                 entity.HasOne(d => d.Book)
                     .WithMany(p => p.Reservations)
                     .HasForeignKey(d => d.BookId)
-                    .HasConstraintName("FK__Reservati__BookI__29572725");
+                    .HasConstraintName("FK__Reservati__BookI__267ABA7A");
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.UserName)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UserPassword).IsRequired();
             });
 
             OnModelCreatingPartial(modelBuilder);

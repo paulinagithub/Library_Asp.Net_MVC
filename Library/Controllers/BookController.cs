@@ -2,82 +2,81 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Library.Models;
+using Library.Services;
+using Library.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Library.Controllers
 {
     [Authorize]
     public class BookController : Controller
     {
-        private readonly LibraryDBContext context;
+        private readonly IBookService _bookService;
 
-        public BookController(LibraryDBContext context)
+        public BookController(IBookService bookService)
         {
-            this.context = context;
+            _bookService = bookService;
         }
-        // GET: BookController
+        [HttpGet]
         public async Task<ActionResult> BookList()
         {
-            List<Book> bookList = await context.Books.ToListAsync();
+            List<BookViewModel> bookList = await _bookService.GetAllBooksAsync();
             return View(bookList);
         }
 
-        // GET: BookController/Create
+        [HttpGet]
         public ActionResult CreateNewBook()
         {
             return View();
         }
 
-        // POST: BookController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateNewBook(Book book)
-        {          
+        public async Task<ActionResult> CreateNewBook(BookViewModel bookViewModel)
+        {
             if (ModelState.IsValid)
             {
-                context.Add(book);
-                await context.SaveChangesAsync();
-
+                await _bookService.AddBookAsync(bookViewModel);
                 SetFlashMessage("Success", "Książka została dodana.");
                 return RedirectToAction("BookList");
             }
             else
             {
                 SetFlashMessage("Error", "Nie udało się stworzyć nowego elementu");
-            }           
+            }
             return View();
         }
 
-        // GET: BookController/Edit/5
+        [HttpGet]
         public async Task<ActionResult> EditBook(int id)
-        {            
-            Book book = await context.Books.Where(w => w.BookId == id).FirstAsync();
+        {
+            var bookViewModel = await _bookService.GetByIdAsync(id);
 
-            if (book == null)
+            if (bookViewModel == null)
             {
                 return NotFound();
             }
 
-            return View(book);          
+            return View(bookViewModel);          
         }
 
-        // POST: BookController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditBook(Book book)
-        {          
+        public async Task<ActionResult> EditBook(BookViewModel book)
+        {
             if (ModelState.IsValid)
             {
-                context.Update(book);
-                await context.SaveChangesAsync();
-
+                await _bookService.UpdateBookAsync(book);
                 SetFlashMessage("Success", "Książka została zaktualizowana.");
-            }              
-            return RedirectToAction("BookList");
+                return RedirectToAction("BookList");
+            }
+            else
+            {
+                SetFlashMessage("Error", "Edycja nie powiodła się");
+            }
+            return View();
         }
 
         private void SetFlashMessage(string messageType, string message)

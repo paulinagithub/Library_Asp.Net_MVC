@@ -156,3 +156,12 @@ ALTER TABLE [dbo].[Reservation]  WITH CHECK ADD FOREIGN KEY([BookID])
 REFERENCES [dbo].[Book] ([BookID])
 GO
 
+CREATE TABLE dbo.Users (
+    ID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    UserName varchar(255) NOT NULL,
+    UserPassword varbinary(max) Not null
+);
+
+Insert Into dbo.Users (UserName,UserPassword)
+        values ('Admin', HASHBYTES('SHA2_256','Admin'))
+GO
