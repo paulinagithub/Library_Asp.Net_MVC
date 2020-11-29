@@ -11,24 +11,19 @@ namespace Library.Services
 {
     public class BookService : IBookService
     {
-
         private readonly IBookRepository _bookRepository;
         private readonly IMapper _mapper;
-
-
 
         public BookService(IBookRepository bookRepository, IMapper mapper)
         {
             _bookRepository = bookRepository ?? throw new ArgumentNullException(nameof(bookRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
-
         public async Task<List<BookViewModel>> GetAllBooksAsync()
         {
             var bookList = await _bookRepository.ListAllBookAsync();
             return _mapper.Map<List<BookViewModel>>(bookList);
-        }
-        
+        }      
         public async Task AddBookAsync(BookViewModel bookViewModel)
         {
             var book =_mapper.Map<Book>(bookViewModel);

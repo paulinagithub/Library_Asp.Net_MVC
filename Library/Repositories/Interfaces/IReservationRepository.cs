@@ -8,6 +8,6 @@ namespace Library.Repository
     {
         bool AnyReservation(int bookID);
         Task<List<Reservation>> ListAllReservationAsync(int bookID);
-        Task SetReservation(Reservation reservation);
+        Task SetReservationAsync(Reservation reservation);
     }
 }

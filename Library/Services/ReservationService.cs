@@ -19,16 +19,14 @@ namespace Library.Services
             _reservationRepository = reservationRepository ?? throw new ArgumentNullException(nameof(reservationRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
-
-        public async Task<List<ReservationViewModel>> GetReservationDetail(int bookID)
+        public async Task<List<ReservationViewModel>> GetReservationDetailAsync(int bookID)
         {
             var reservationList =  await _reservationRepository.ListAllReservationAsync(bookID);
             return _mapper.Map<List<ReservationViewModel>>(reservationList);
-
         }
-        public async Task SetReservation(int bookID, int userID)
+        public async Task SetReservationAsync(int bookID, int userID)
         {
-            await _reservationRepository.SetReservation(CreateReservationObject(bookID, userID));           
+            await _reservationRepository.SetReservationAsync(CreateReservationObject(bookID, userID));           
         }
         public bool AnyReservation(int bookID)
         {

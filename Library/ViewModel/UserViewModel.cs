@@ -8,12 +8,10 @@ namespace Library.ViewModel
 {
     public class UserViewModel
     {
-
         public int Id { get; set; }
         [Required(ErrorMessage = "To pole jest wymagane")]
         [Display(Name = "Login")]
         public string Login { get; set; }
-
         [Required(ErrorMessage = "To pole jest wymagane")]
         [Display(Name = "Hasło")]
         [DataType(DataType.Password)]

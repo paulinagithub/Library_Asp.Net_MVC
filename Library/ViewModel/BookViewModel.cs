@@ -19,7 +19,6 @@ namespace Library.ViewModel
         [Required(ErrorMessage = "To pole jest wymagane")]
         [Display(Name = "Rok wydania")]
         public int? PublishmentYear { get; set; }
-
         [Required(ErrorMessage = "To pole jest wymagane")]
         [Display(Name = "Krótki Opis")]
         public string ShortDescription { get; set; }

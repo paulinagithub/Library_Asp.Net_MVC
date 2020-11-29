@@ -12,9 +12,10 @@ namespace Library.Mapper
     {
         public MappingProfile()
         {
+            //Book Mapper
             CreateMap<Book, BookViewModel>();
             CreateMap<BookViewModel, Book>();
-
+            //Reservation Mapper
             CreateMap<Reservation, ReservationViewModel>();
             CreateMap<ReservationViewModel, Reservation>();
         }

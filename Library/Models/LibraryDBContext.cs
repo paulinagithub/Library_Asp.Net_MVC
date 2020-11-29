@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
@@ -11,17 +10,13 @@ namespace Library.Models
         public LibraryDBContext()
         {
         }
-
         public LibraryDBContext(DbContextOptions<LibraryDBContext> options)
             : base(options)
         {
         }
-
         public virtual DbSet<Book> Books { get; set; }
         public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<User> Users { get; set; }
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Book>(entity =>
@@ -59,11 +54,11 @@ namespace Library.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.UserPassword).IsRequired();
-            });
 
+            });
+           
             OnModelCreatingPartial(modelBuilder);
         }
-
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

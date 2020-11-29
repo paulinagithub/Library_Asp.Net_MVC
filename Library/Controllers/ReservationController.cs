@@ -20,25 +20,24 @@ namespace Library.Controllers
 
         public ReservationController(IReservationService reservationService)
         {
-            _reservationService = reservationService;
+            _reservationService = reservationService ?? throw new ArgumentNullException(nameof(reservationService));
         }
         [HttpGet]
         public async Task<ActionResult> ReservationDetails(int id)
         {
-            List<ReservationViewModel> reservation = await _reservationService.GetReservationDetail(id);
+            List<ReservationViewModel> reservation = await _reservationService.GetReservationDetailAsync(id);
             if (reservation == null)
             {
                 return NotFound();
             }
-
             return View(reservation);           
         }
-        [HttpPost]
+        [HttpGet]
         public async Task<ActionResult> BookReservation(int id)
         {
             if (!_reservationService.AnyReservation(id))
             {
-                await _reservationService.SetReservation(id, Int32.Parse(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
+                await _reservationService.SetReservationAsync(id, Int32.Parse(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)));
                 SetFlashMessage("Success", "Książka została zarezerwowana.");              
             }
             else
@@ -47,7 +46,6 @@ namespace Library.Controllers
             }
             return RedirectToAction("BookList", "Book");
         }
-
         private void SetFlashMessage(string resultOfAction, string message)
         {
             TempData[$"{resultOfAction}"] = message;

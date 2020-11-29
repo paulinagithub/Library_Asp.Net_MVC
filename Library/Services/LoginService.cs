@@ -13,28 +13,24 @@ namespace Library.Services
 {
     public class LoginService : ILoginService
     {
-
         private readonly ILoginRepository _loginRepository;
-        private readonly IMapper _mapper;
 
-        public LoginService(ILoginRepository loginRepository, IMapper mapper)
+        public LoginService(ILoginRepository loginRepository)
         {
             _loginRepository = loginRepository ?? throw new ArgumentNullException(nameof(loginRepository));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
-
         public int GetUserID(string login, string password)
         {
             var hashPassword = ComputeSha256Hash(password);
             return _loginRepository.GetUserID(login, hashPassword);
         }
-
         public ClaimsIdentity CreateClaimsIdentity(int userID)
         {
-            var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.NameIdentifier, userID.ToString())
-                };
+            var claims = new List<Claim> 
+            {
+                new Claim(ClaimTypes.NameIdentifier, userID.ToString())
+            };
+            
             return new ClaimsIdentity(claims, "Login");
         }
         private byte[] ComputeSha256Hash(string rawData)

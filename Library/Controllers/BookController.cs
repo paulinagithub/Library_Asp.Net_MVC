@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Library.Services;
 using Library.ViewModel;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.Controllers
@@ -17,7 +16,7 @@ namespace Library.Controllers
 
         public BookController(IBookService bookService)
         {
-            _bookService = bookService;
+            _bookService = bookService ?? throw new ArgumentNullException(nameof(bookService));
         }
         [HttpGet]
         public async Task<ActionResult> BookList()
@@ -25,13 +24,11 @@ namespace Library.Controllers
             List<BookViewModel> bookList = await _bookService.GetAllBooksAsync();
             return View(bookList);
         }
-
         [HttpGet]
         public ActionResult CreateNewBook()
         {
             return View();
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateNewBook(BookViewModel bookViewModel)
@@ -42,13 +39,10 @@ namespace Library.Controllers
                 SetFlashMessage("Success", "Książka została dodana.");
                 return RedirectToAction("BookList");
             }
-            else
-            {
-                SetFlashMessage("Error", "Nie udało się stworzyć nowego elementu");
-            }
+
+            SetFlashMessage("Error", "Nie udało się stworzyć nowego elementu");
             return View();
         }
-
         [HttpGet]
         public async Task<ActionResult> EditBook(int id)
         {
@@ -58,10 +52,8 @@ namespace Library.Controllers
             {
                 return NotFound();
             }
-
             return View(bookViewModel);          
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditBook(BookViewModel book)
@@ -72,13 +64,10 @@ namespace Library.Controllers
                 SetFlashMessage("Success", "Książka została zaktualizowana.");
                 return RedirectToAction("BookList");
             }
-            else
-            {
-                SetFlashMessage("Error", "Edycja nie powiodła się");
-            }
+
+            SetFlashMessage("Error", "Edycja nie powiodła się");
             return View();
         }
-
         private void SetFlashMessage(string messageType, string message)
         {
             TempData[$"{messageType}"] = message;

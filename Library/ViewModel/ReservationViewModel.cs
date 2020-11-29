@@ -9,10 +9,9 @@ namespace Library.ViewModel
 {
     public class ReservationViewModel
     {
-
+        public int BookId { get; set; }
         [Display(Name = "Data rezerwacji")]
         public DateTime ReservationDate { get; set; }
-        public int BookId { get; set; }
 
         public virtual BookViewModel Book { get; set; }
     }

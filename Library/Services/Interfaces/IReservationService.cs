@@ -8,7 +8,7 @@ namespace Library.Services
     public interface IReservationService
     {
         bool AnyReservation(int bookID);
-        Task<List<ReservationViewModel>> GetReservationDetail(int bookID);
-        Task SetReservation(int bookID, int userID);
+        Task<List<ReservationViewModel>> GetReservationDetailAsync(int bookID);
+        Task SetReservationAsync(int bookID, int userID);
     }
 }
